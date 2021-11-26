@@ -27,11 +27,11 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <math.h>
-#include "graph.h"
+#include "max_flow/graph.h"
 
 using namespace std;
 
-const string IMAGE_PATH = "C:/data/graphcuts/fishes.jpg";
+const string IMAGE_PATH = "C:\\Work\\Code\\GraphCuts\\bone.jpg";
 
 template class Graph<int,int,int>;
 template class Graph<short,int,int>;
@@ -363,12 +363,12 @@ void onMouse(int event, int x, int y, int, void *)
 	switch (event)
 	{
 		// gather background points with left-mouse button.
-		case CV_EVENT_LBUTTONDOWN:
+		case cv::MouseEventTypes::EVENT_LBUTTONDOWN:
 			gathering_bg = true;
 			break;
 			// update visualization.
 
-		case CV_EVENT_LBUTTONUP:
+		case cv::MouseEventTypes::EVENT_LBUTTONUP:
 			gathering_bg = false;
 			// update visualization.
 			updateDisplay();
@@ -376,17 +376,17 @@ void onMouse(int event, int x, int y, int, void *)
 			break;
 
 		// gather foreground points with the right-mouse button.
-		case CV_EVENT_RBUTTONDOWN:
+		case cv::MouseEventTypes::EVENT_RBUTTONDOWN:
 			gathering_fg = true;
 			break;
 
-		case CV_EVENT_RBUTTONUP:
+		case cv::MouseEventTypes::EVENT_RBUTTONUP:
 			gathering_fg = false;
 			updateDisplay();
 			//runSegmentation();
 			break;
 
-		case CV_EVENT_MOUSEMOVE:
+		case cv::MouseEventTypes::EVENT_MOUSEMOVE:
 			if (gathering_bg || gathering_fg)
 			{
 				// add points from current x,y location to bg/fg list.
@@ -418,7 +418,7 @@ void init()
 	input_image = new cv::Mat(tmp);
 	displayed_image = new cv::Mat(tmp);
 	input_image_grayscale = new cv::Mat(tmp);
-	cv::cvtColor(*input_image_grayscale, *input_image_grayscale, CV_BGR2GRAY);
+	cv::cvtColor(*input_image_grayscale, *input_image_grayscale, cv::COLOR_BGRA2GRAY);
 
 
 	// initialize structure that 
